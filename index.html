@@ -1,0 +1,64 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="elliesort.js" defer></script>
+</head>
+<style>
+  #game-container {
+    background-image: url("background-mountain.jpg");
+    height: 100vh;
+    padding-top: 30px;
+    background-size: cover;
+  }
+
+  .branch-container {
+    display: grid;
+    width: 35vh;
+    height: 10vh;
+    margin-bottom: 1vw;
+    align-items: end;
+    grid-template-rows: auto;
+  }
+
+  .branch {
+    height: 1vh;
+    width: 35vh;
+    background-color: brown;
+    margin-top: auto;
+  }
+
+  .animal-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: start;
+  }
+
+  .animal {
+    display: inline-block;
+    width: 8vh;
+  }
+
+  .animal img {
+    width: 8vh;
+  }
+</style>
+
+<div id="game-container"></div>
+
+<template id="branch-template">
+  <div class="branch-container">
+    <div class="animal-container"></div>
+    <div class="branch left"></div>
+  </div>
+</template>
+
+<template id="animal-template">
+  <span class="animal">
+    <img src="animal.png" />
+  </span>
+</template>
+
+</html>
+
+<!-- Photo by <a href="https://unsplash.com/@fiveamstories?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Alex Shutin</a> on <a href="https://unsplash.com/photos/panoramic-photography-of-mountains-kKvQJ6rK6S4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
+<!-- <a href="https://www.flaticon.com/free-icons/animal" title="animal icons">Animal icons created by Freepik - Flaticon</a> -->
