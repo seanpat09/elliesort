@@ -4,25 +4,27 @@
   <script type="text/javascript" src="elliesort.js" defer></script>
 </head>
 <style>
+
+  
   #game-container {
     background-image: url("background-mountain.jpg");
     height: 100vh;
-    padding-top: 30px;
     background-size: cover;
+    position: relative;
+    
   }
 
   .branch-container {
     display: grid;
-    width: 35vh;
-    height: 10vh;
-    margin-bottom: 1vw;
+    width: 100%;
+    height: 15%;
     align-items: end;
     grid-template-rows: auto;
   }
 
   .branch {
     height: 1vh;
-    width: 35vh;
+    width: 100%;
     background-color: brown;
     margin-top: auto;
   }
@@ -35,11 +37,22 @@
 
   .animal {
     display: inline-block;
-    width: 8vh;
+    position: relative;
+    width: 20vw;
   }
 
   .animal img {
-    width: 8vh;
+    width: 100%;
+  }
+
+  @media (orientation: landscape) {
+    #game-container {
+      margin: 0 33% 0 33%;
+    }
+
+    .animal {
+      width: 12vh;
+    }
   }
 </style>
 

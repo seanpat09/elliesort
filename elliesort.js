@@ -15,6 +15,7 @@ class Branch {
     }
 
     addAnimal(anAnimal) {
+        this.container.querySelector(".animal-container").append(anAnimal.container);
         this.animals.push(anAnimal);
         return this;
     }
@@ -116,6 +117,11 @@ class Animal {
     selected;
     constructor(color) {
         this.color = color;
+
+        const animalTemplate = document.querySelector("#animal-template");
+        const animalClone = animalTemplate.content.cloneNode(true);
+        this.container = animalClone.children[0];
+        this.container.style.backgroundColor = color;
     }
 
     getColor() {
@@ -133,34 +139,52 @@ class Animal {
     }
 }
 
-const NUM_BRANCHES = 3;
+const NUM_BRANCHES = 6;
 let branches = [];
 
 for (let i = 0; i < NUM_BRANCHES; i++) {
     branches.push(new Branch(i));
 }
 
-branches[0]
-    .addAnimal(new Animal("blue"))
-    .addAnimal(new Animal("orange"))
-    .addAnimal(new Animal("blue"))
-    .addAnimal(new Animal("orange"));
+const allAnimals = [
+    new Animal("skyblue"),
+    new Animal("skyblue"),
+    new Animal("skyblue"),
+    new Animal("skyblue"),
 
-branches[1]
-    .addAnimal(new Animal("orange"))
-    .addAnimal(new Animal("orange"))
-    .addAnimal(new Animal("blue"))
-    .addAnimal(new Animal("blue"));
+    new Animal("orange"),
+    new Animal("orange"),
+    new Animal("orange"),
+    new Animal("orange"),
+
+    new Animal("pink"),
+    new Animal("pink"),
+    new Animal("pink"),
+    new Animal("pink"),
+
+    new Animal("lightgreen"),
+    new Animal("lightgreen"),
+    new Animal("lightgreen"),
+    new Animal("lightgreen")
+]
+
+const shuffle = (array) => { 
+    return array.sort(() => Math.random() - 0.5); 
+}; 
+
+const shuffledAnimals = shuffle(allAnimals); 
+
+let branchCounter = 0;
+shuffledAnimals.forEach((a) => {
+    if(branches[branchCounter].animals.length >= 4) {
+        branchCounter++;
+    }
+
+    branches[branchCounter].addAnimal(a);
+})
+
 
 branches.forEach((b) => {
-    b.animals.forEach((a) => {
-        const animalTemplate = document.querySelector("#animal-template");
-        const animalClone = animalTemplate.content.cloneNode(true);
-        a.container = animalClone.children[0];
-        a.container.style.backgroundColor = a.getColor();
-        b.container.querySelector(".animal-container").append(animalClone);
-    });
-
     const container = document.querySelector("#game-container");
     container.append(b.container);
 });
