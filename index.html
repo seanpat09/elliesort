@@ -3,6 +3,10 @@
 <head>
   <script type="text/javascript" src="elliesort.js" defer></script>
 </head>
+
+<link rel="stylesheet" href="confetti.css">
+<link rel="stylesheet" href="animals.css">
+
 <style>
 
   
@@ -11,7 +15,6 @@
     height: 100vh;
     background-size: cover;
     position: relative;
-    
   }
 
   .branch-container {
@@ -56,7 +59,23 @@
   }
 </style>
 
-<div id="game-container"></div>
+
+
+<div id="game-container" class="">
+  <div class="confetti-container">
+    YOU WIN!
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+  </div>
+</div>
 
 <template id="branch-template">
   <div class="branch-container">

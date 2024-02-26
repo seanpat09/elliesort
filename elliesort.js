@@ -31,6 +31,22 @@ class Branch {
         return selectedAnimals;
     }
 
+    isBranchComplete() {
+        if(this.animals.length == 0) {
+            return true;
+        }
+
+        if(this.animals.length != 4){
+            return false;
+        }
+
+        let animalColors = new Set();
+        this.animals.forEach((a) => {
+            animalColors.add(a.getColor());
+        });
+
+        return animalColors.size == 1;
+    }
 
     onClickHandler() {
         if (selectedBranch == null) {
@@ -69,8 +85,6 @@ class Branch {
             ) {
                 selectedAnimals = selectedBranch.removeSelectedAnimals();
                 let animalContainer = this.container.querySelector(".animal-container");
-                let oldPositions = [];
-                let newPositions = [];
                 selectedAnimals.forEach((a) => {
                     let oldPos = a.container.getBoundingClientRect();
 
@@ -98,6 +112,7 @@ class Branch {
                         containerClone.remove();
                         animalContainer.appendChild(a.container);
                         this.animals.push(a);
+                        this.container.dispatchEvent(new CustomEvent("animalmoved", {bubbles: true}));
                     });
 
 
@@ -105,8 +120,6 @@ class Branch {
 
                 selectedBranch = null;
             }
-
-
         }
     }
 }
@@ -131,11 +144,13 @@ class Animal {
     select() {
         this.selected = true;
         this.container.style.border = "thick solid yellow";
+        this.container.classList.add("selected");
     }
 
     unselect() {
         this.selected = false;
         this.container.style.border = "";
+        this.container.classList.remove("selected");
     }
 }
 
@@ -184,7 +199,15 @@ shuffledAnimals.forEach((a) => {
 })
 
 
+const container = document.querySelector("#game-container");
 branches.forEach((b) => {
-    const container = document.querySelector("#game-container");
     container.append(b.container);
+});
+
+container.addEventListener("animalmoved", () => {
+    const completeBranches = branches.filter(b => b.isBranchComplete());
+    if(completeBranches.length == branches.length) {
+        const confettiContainer = document.querySelector(".confetti-container");
+        confettiContainer.style.visibility = "visible";
+    }
 });
