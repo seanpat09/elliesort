@@ -20,7 +20,7 @@ class Branch {
     }
 
     getSelectedAnimals() {
-        return this.animals.filter((a) => a.selected )
+        return this.animals.filter((a) => a.selected)
     }
 
     removeSelectedAnimals() {
@@ -59,24 +59,53 @@ class Branch {
 
             let selectedAnimals = selectedBranch.getSelectedAnimals()
             let numAnimals = this.animals.length;
-            if(
+            if (
                 (selectedAnimals.length + numAnimals <= 4)
-                 && (
+                && (
                     numAnimals == 0
-                    || this.animals[numAnimals - 1].getColor() == selectedAnimals[0].getColor() 
-                 )
+                    || this.animals[numAnimals - 1].getColor() == selectedAnimals[0].getColor()
+                )
             ) {
                 selectedAnimals = selectedBranch.removeSelectedAnimals();
                 let animalContainer = this.container.querySelector(".animal-container");
+                let oldPositions = [];
+                let newPositions = [];
                 selectedAnimals.forEach((a) => {
-                    animalContainer.appendChild(a.container);
-                    this.animals.push(a)
+                    let oldPos = a.container.getBoundingClientRect();
+
+                    //Append a hidden clone to find the new position so we can animate it
+                    let containerClone = a.container.cloneNode(true);
+                    containerClone.style.visibility = "hidden"
+                    animalContainer.appendChild(containerClone);
+
+                    let newPos = containerClone.getBoundingClientRect();
+
+                    const translateTransform = `translate(${newPos.x - oldPos.x}px, ${newPos.y - oldPos.y}px)`;
+                    a.container.animate([
+                        {
+                            transform: "translate(0,0)"
+                        }
+                        ,
+                        {
+                            transform: `${translateTransform}`
+                        }
+
+                    ], {
+                        easing: "ease-out",
+                        duration: 500
+                    }).finished.then(() => {
+                        containerClone.remove();
+                        animalContainer.appendChild(a.container);
+                        this.animals.push(a);
+                    });
+
+
                 });
 
                 selectedBranch = null;
             }
 
-            
+
         }
     }
 }
